@@ -226,25 +226,19 @@ def four_byte_dec(data):
 	return d_n
 
 recv_socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0800))
-recv_socket_udp = socket.socket(socket.AF_PACKET, socket.SOCK_DGRAM, socket.ntohs(0x0800))
-#recv_socket_tcp = socket.socket(socket.AF_PACKET, socket.SOCK_STREAM, socket.ntohs(0x0800))
 
 #SOCK_STREAM : TCP
 #SOCK_DGRAM : UDP
 
 while True:
-#	print("<<<<<<<<<<Packet Captur Start>>>>>>>>>>>>>")
-	data = recv_socket.recvfrom(2000)
-	data_udp = recv_socket_udp.recvfrom(2000)
+	data = recv_socket.recvfrom(65565)
 	temp = struct.unpack("!1c1c2s2c2c1c1c2c4c4c",data[0][14:34])
 	temp_prc = get_protocol(temp[8])	
-#	print("============================== :",temp_prc)
 	if temp_prc == 17:
 		print("<<<<<<<<<<Packet Capture Start>>>>>>>>>>>>>")
 		parsing_ethernet_header(data[0][0:14])
-#		parsing_ip_header(data[0][14:34])
-		parsing_ip_header(data_udp[0][0:20])
-		parsing_udp_header(data_udp[0][20:28])
+		parsing_ip_header(data[0][14:34])
+		parsing_udp_header(data[0][34:42])
 	elif temp_prc == 6:
 		print("<<<<<<<<<<Packet Capture Start>>>>>>>>>>>>>")
 		parsing_ethernet_header(data[0][0:14])
