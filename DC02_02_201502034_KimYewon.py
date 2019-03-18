@@ -120,7 +120,7 @@ def parsing_udp_header(data_udp):
 	udp_srcport = two_byte_dec(udp_header[0])
 	udp_dstport = two_byte_dec(udp_header[1])
 	udp_length = two_byte_dec(udp_header[2])
-	udp_header_chsum = ip_hex_return(udp_header[3:4])
+	udp_header_chsum = ip_hex_return(udp_header[3:5])
 	print("=============udp header================")
 	#print(udp_header)
 	print("src_port : ", udp_srcport[0])
